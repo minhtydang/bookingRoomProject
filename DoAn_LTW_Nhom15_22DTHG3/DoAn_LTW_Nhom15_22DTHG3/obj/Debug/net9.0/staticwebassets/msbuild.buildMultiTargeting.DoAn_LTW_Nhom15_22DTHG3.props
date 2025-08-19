@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\DoAn_LTW_Nhom15_22DTHG3.props" />
+</Project>

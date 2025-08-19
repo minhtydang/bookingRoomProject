@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="ProductList" xml:space="preserve">
+    <value>Danh Sách Phòng</value>
+  </data>
+  <data name="SearchPlaceholder" xml:space="preserve">
+    <value>Tìm kiếm theo tên, mô tả...</value>
+  </data>
+  <data name="RegionPlaceholder" xml:space="preserve">
+    <value>Khu vực</value>
+  </data>
+  <data name="MinPricePlaceholder" xml:space="preserve">
+    <value>Giá từ</value>
+  </data>
+  <data name="MaxPricePlaceholder" xml:space="preserve">
+    <value>Giá đến</value>
+  </data>
+  <data name="MinAreaPlaceholder" xml:space="preserve">
+    <value>DT từ</value>
+  </data>
+  <data name="MaxAreaPlaceholder" xml:space="preserve">
+    <value>DT đến</value>
+  </data>
+  <data name="SortBy" xml:space="preserve">
+    <value>Sắp Xếp Theo</value>
+  </data>
+  <data name="NameAZ" xml:space="preserve">
+    <value>Tên A-Z</value>
+  </data>
+  <data name="NameZA" xml:space="preserve">
+    <value>Tên Z-A</value>
+  </data>
+  <data name="PriceAsc" xml:space="preserve">
+    <value>Giá Tăng Dần</value>
+  </data>
+  <data name="PriceDesc" xml:space="preserve">
+    <value>Giá Giảm Dần</value>
+  </data>
+  <data name="ProductImage" xml:space="preserve">
+    <value>Ảnh sản phẩm</value>
+  </data>
+  <data name="NoImage" xml:space="preserve">
+    <value>Không có ảnh</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Danh mục</value>
+  </data>
+  <data name="NoCategory" xml:space="preserve">
+    <value>Không có danh mục</value>
+  </data>
+  <data name="BookRoom" xml:space="preserve">
+    <value>Đặt Phòng</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>Xem</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Đóng</value>
+  </data>
+  <data name="RoomImage" xml:space="preserve">
+    <value>Ảnh phòng</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Giá</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Mô tả</value>
+  </data>
+  <data name="LocationInfo" xml:space="preserve">
+    <value>Thông Tin Vị Trí</value>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>Khu vực</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Địa chỉ</value>
+  </data>
+  <data name="Area" xml:space="preserve">
+    <value>Diện tích</value>
+  </data>
+  <data name="ViewDetails" xml:space="preserve">
+    <value>Xem chi tiết</value>
+  </data>
+</root> 

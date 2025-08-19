@@ -1,0 +1,129 @@
+﻿@model ShoppingCart
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["YourCart"];
+}
+
+<h2 class="mb-4">🛒 @Localizer["YourCart"]</h2>
+
+@if (Model.Items == null || !Model.Items.Any())
+{
+    <div class="alert alert-info">@Localizer["EmptyCart"]</div>
+}
+else
+{
+    <form asp-action="UpdateCart" method="post">
+        <table class="table table-bordered table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>@Localizer["Room"]</th>
+                    <th>@Localizer["RentalDays"]</th>
+                    <th>@Localizer["RentalPrice"]</th>
+                    <th>@Localizer["Deposit"]</th>
+                    <th><b>@Localizer["Total"]</b></th>
+                    <th>@Localizer["Action"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Items.Count; i++)
+                {
+                    var item = Model.Items[i];
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>
+                            <input type="number"
+                                   name="Items[@i].Quantity"
+                                   value="@item.Quantity"
+                                   min="1"
+                                   class="form-control form-control-sm"
+                                   style="width:80px;" />
+                            <input type="hidden" name="Items[@i].ProductId" value="@item.ProductId" />
+                            <div class="mt-2">
+                                <label class="form-label mb-0">@Localizer["CheckInDate"]:</label>
+                                <input type="date" name="Items[@i].CheckInDate" value="@(item.CheckInDate?.ToString("yyyy-MM-dd"))" class="form-control form-control-sm" />
+                                <label class="form-label mb-0">@Localizer["CheckOutDate"]:</label>
+                                <input type="date" name="Items[@i].CheckOutDate" value="@(item.CheckOutDate?.ToString("yyyy-MM-dd"))" class="form-control form-control-sm" />
+                            </div>
+                        </td>
+                        <td>@(item.Price.ToString("N0"))</td>
+                        <td>@((item.Price * 0.05m * item.Quantity).ToString("N0")) VNĐ</td>
+                        <td>@((item.Price * 0.05m * item.Quantity).ToString("N0")) VNĐ</td>
+                        <td>
+                            <a asp-action="RemoveFromCart" asp-route-productId="@item.ProductId" class="btn btn-sm btn-danger" title="@Localizer["RemoveFromCart"]">
+                                <i class="bi bi-trash"></i> @Localizer["Delete"]
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <button type="submit" class="btn btn-primary mb-3">@Localizer["UpdateRentalDays"]</button>
+    </form>
+
+    <div class="text-end">
+        @{
+            var totalRent = Model.Items.Sum(x => x.Price * 0.05m * x.Quantity);
+        }
+        <h5 class="fw-bold">@Localizer["TotalRental"]: @totalRent.ToString("N0") VNĐ</h5>
+
+        <form asp-action="ApplyVoucher" method="post" class="mb-3">
+            <div class="input-group mb-2" style="max-width:350px;float:right;">
+                <input type="text" name="voucherCode" class="form-control" placeholder="@Localizer["EnterVoucherCode"]" value="@Model.VoucherCode" />
+                <button type="submit" class="btn btn-outline-primary">@Localizer["Apply"]</button>
+            </div>
+            @if (TempData["VoucherError"] != null)
+            {
+                <div class="text-danger">@TempData["VoucherError"]</div>
+            }
+        </form>
+
+        @if (!string.IsNullOrEmpty(Model.VoucherCode) && Model.DiscountPercent > 0)
+        {
+            <div class="mb-2 text-success">
+                <b>@Localizer["AppliedCode"]:</b> <span class="badge bg-success">@Model.VoucherCode</span>
+                <span class="ms-2">(@(Model.DiscountPercent * 100)%)</span>
+            </div>
+            <div class="mb-2">
+                <span>@Localizer["DiscountAmount"]:</span>
+                <b>@(Model.DiscountAmount.ToString("N0")) VNĐ</b>
+                @if (Model.DiscountAmount > 0 && Model.DiscountPercent > 0)
+                {
+                    <span class="ms-2 text-muted">(@Localizer["Max"]: @((Model.Items.Sum(x => x.Price * 0.05m * x.Quantity) * Model.DiscountPercent).ToString("N0")) VNĐ)</span>
+                }
+            </div>
+            <h5 class="fw-bold text-primary">
+                @Localizer["TotalToPay"]: @((Model.Items.Sum(x => x.Price * 0.05m * x.Quantity) * (1 - Model.DiscountPercent)).ToString("N0")) VNĐ
+            </h5>
+        }
+        else
+        {
+            <h5 class="fw-bold">
+                @Localizer["TotalPayment"]: @totalRent.ToString("N0") VNĐ
+            </h5>
+            <div class="text-muted">@Localizer["HaveVoucherCode"]</div>
+        }
+
+        <div class="d-flex gap-2 mt-3">
+            <a asp-action="Checkout" class="btn btn-success">
+                <i class="bi bi-credit-card-fill me-1"></i> @Localizer["GoToCheckout"]
+            </a>
+            @if (Model.Items.Any() && Model.TotalAfterDiscount > 0)
+            {
+                <form asp-action="PayWithMomo" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-warning">
+                        <img src="https://static.mservice.io/img/logo-momo.png" style="height:20px;vertical-align:middle;" /> @Localizer["PayWithMomo"]
+                    </button>
+                </form>
+            }
+            <a href="/Product" class="btn btn-secondary">
+                <i class="bi bi-arrow-left-circle me-1"></i> @Localizer["BackToList"]
+            </a>
+        </div>
+    </div>
+}
+
+
+

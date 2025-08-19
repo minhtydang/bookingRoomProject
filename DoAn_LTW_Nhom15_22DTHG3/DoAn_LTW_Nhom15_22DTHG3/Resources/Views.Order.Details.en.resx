@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="OrderDetails" xml:space="preserve">
+    <value>Order Details</value>
+  </data>
+  <data name="UserID" xml:space="preserve">
+    <value>User ID</value>
+  </data>
+  <data name="OrderDate" xml:space="preserve">
+    <value>Order Date</value>
+  </data>
+  <data name="ShippingAddress" xml:space="preserve">
+    <value>Shipping Address</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="RoomPrice" xml:space="preserve">
+    <value>Room Price</value>
+  </data>
+  <data name="BookedRoomsList" xml:space="preserve">
+    <value>Booked Rooms List</value>
+  </data>
+  <data name="Room" xml:space="preserve">
+    <value>Room</value>
+  </data>
+  <data name="PricePerMonth" xml:space="preserve">
+    <value>Price / Month</value>
+  </data>
+  <data name="NumberOfMonths" xml:space="preserve">
+    <value>Number of Months</value>
+  </data>
+  <data name="Deposit" xml:space="preserve">
+    <value>Deposit</value>
+  </data>
+  <data name="BackToOrderList" xml:space="preserve">
+    <value>Back to Order List</value>
+  </data>
+</root> 

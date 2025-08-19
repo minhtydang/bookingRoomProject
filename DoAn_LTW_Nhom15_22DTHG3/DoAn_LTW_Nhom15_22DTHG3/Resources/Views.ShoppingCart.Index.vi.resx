@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="YourCart" xml:space="preserve">
+    <value>Giỏ phòng trọ của bạn</value>
+  </data>
+  <data name="EmptyCart" xml:space="preserve">
+    <value>Giỏ phòng trọ của bạn đang trống.</value>
+  </data>
+  <data name="Room" xml:space="preserve">
+    <value>Phòng trọ</value>
+  </data>
+  <data name="RentalDays" xml:space="preserve">
+    <value>Số ngày thuê</value>
+  </data>
+  <data name="RentalPrice" xml:space="preserve">
+    <value>Giá thuê (VNĐ)</value>
+  </data>
+  <data name="Deposit" xml:space="preserve">
+    <value>Tiền cọc xem phòng (20%)</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Tổng tiền</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>Hành động</value>
+  </data>
+  <data name="CheckInDate" xml:space="preserve">
+    <value>Ngày đến</value>
+  </data>
+  <data name="CheckOutDate" xml:space="preserve">
+    <value>Ngày đi</value>
+  </data>
+  <data name="RemoveFromCart" xml:space="preserve">
+    <value>Xóa phòng trọ khỏi giỏ</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Xóa</value>
+  </data>
+  <data name="UpdateRentalDays" xml:space="preserve">
+    <value>Cập nhật số ngày thuê</value>
+  </data>
+  <data name="TotalRental" xml:space="preserve">
+    <value>Tổng tiền thuê</value>
+  </data>
+  <data name="EnterVoucherCode" xml:space="preserve">
+    <value>Nhập mã giảm giá</value>
+  </data>
+  <data name="Apply" xml:space="preserve">
+    <value>Áp dụng</value>
+  </data>
+  <data name="AppliedCode" xml:space="preserve">
+    <value>Đã áp dụng mã</value>
+  </data>
+  <data name="DiscountAmount" xml:space="preserve">
+    <value>Số tiền giảm</value>
+  </data>
+  <data name="Max" xml:space="preserve">
+    <value>Tối đa</value>
+  </data>
+  <data name="TotalToPay" xml:space="preserve">
+    <value>Tổng tiền phải trả</value>
+  </data>
+  <data name="TotalPayment" xml:space="preserve">
+    <value>Tổng tiền thanh toán</value>
+  </data>
+  <data name="HaveVoucherCode" xml:space="preserve">
+    <value>Bạn có mã giảm giá? Hãy nhập vào để được giảm giá!</value>
+  </data>
+  <data name="GoToCheckout" xml:space="preserve">
+    <value>Tới trang thanh toán</value>
+  </data>
+  <data name="PayWithMomo" xml:space="preserve">
+    <value>Thanh toán MoMo</value>
+  </data>
+  <data name="BackToList" xml:space="preserve">
+    <value>Quay lại danh sách</value>
+  </data>
+</root> 

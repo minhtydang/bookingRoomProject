@@ -1,0 +1,83 @@
+﻿@{
+    ViewData["Title"] = "Trang chủ";
+}
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+<style>
+    body {
+        background-color: #fff;
+        color: #000;
+    }
+
+    .gold {
+        color: #d4af37;
+    }
+
+    .bg-gold {
+        background-color: #d4af37;
+        color: white;
+    }
+
+    .btn-gold {
+        background-color: #d4af37;
+        color: #000;
+        border: none;
+    }
+
+        .btn-gold:hover {
+            background-color: #c39c2b;
+            color: #fff;
+        }
+
+    .card-title {
+        font-weight: bold;
+        color: #000;
+    }
+
+    .card-text {
+        color: #333;
+    }
+
+    .card-img-top {
+        height: 220px;
+        object-fit: cover;
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold text-dark">Chào mừng đến với <span class="gold">Homestay Premium</span></h1>
+        <p class="lead text-muted">Khám phá và đặt phòng trọ sang trọng với giá cả hợp lý, dịch vụ cao cấp.</p>
+        <a asp-controller="Product" asp-action="Index" class="btn btn-gold btn-lg px-5 py-3 rounded-pill mt-3 shadow-sm">
+            <i class="bi bi-door-open-fill"></i> Xem phòng trọ
+        </a>
+    </div>
+
+    <h2 class="text-center">@Localizer["Welcome"]</h2>
+
+ @*    <div class="row g-4 justify-content-center">
+        <div class="col-md-4">
+            <div class="card shadow-lg border-0 rounded-4">
+                <img src="~/images/hotelroom1.jpg" class="card-img-top rounded-top-4" alt="Phòng sang trọng">
+                <div class="card-body">
+                    <h5 class="card-title">Phòng đôi tiêu chuẩn</h5>
+                    <p class="card-text">Không gian yên tĩnh, nội thất hiện đại, gần trung tâm thành phố.</p>
+                    <a asp-controller="Product" asp-action="Index" class="btn btn-sm btn-gold rounded-pill px-4">Xem chi tiết</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-lg border-0 rounded-4">
+                <img src="~/images/homestay1.jpg" class="card-img-top rounded-top-4" alt="Phòng homestay đẹp">
+                <div class="card-body">
+                    <h5 class="card-title">Homestay view đẹp</h5>
+                    <p class="card-text">Phù hợp cho cặp đôi hoặc gia đình nhỏ. Có bếp riêng và ban công rộng.</p>
+                    <a asp-controller="Product" asp-action="Index" class="btn btn-sm btn-gold rounded-pill px-4">Xem chi tiết</a>
+                </div>
+            </div>
+        </div>
+    </div> *@
+</div>

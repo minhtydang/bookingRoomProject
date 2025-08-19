@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="OrderDetails" xml:space="preserve">
+    <value>Chi tiết đơn đặt phòng</value>
+  </data>
+  <data name="UserID" xml:space="preserve">
+    <value>Người dùng ID</value>
+  </data>
+  <data name="OrderDate" xml:space="preserve">
+    <value>Ngày đặt</value>
+  </data>
+  <data name="ShippingAddress" xml:space="preserve">
+    <value>Địa chỉ khách</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Ghi chú</value>
+  </data>
+  <data name="RoomPrice" xml:space="preserve">
+    <value>Tiền Phòng</value>
+  </data>
+  <data name="BookedRoomsList" xml:space="preserve">
+    <value>Danh sách phòng trọ đã đặt</value>
+  </data>
+  <data name="Room" xml:space="preserve">
+    <value>Phòng trọ</value>
+  </data>
+  <data name="PricePerMonth" xml:space="preserve">
+    <value>Giá / Tháng</value>
+  </data>
+  <data name="NumberOfMonths" xml:space="preserve">
+    <value>Số Tháng</value>
+  </data>
+  <data name="Deposit" xml:space="preserve">
+    <value>Đã Cọc</value>
+  </data>
+  <data name="BackToOrderList" xml:space="preserve">
+    <value>Quay lại danh sách đơn đặt phòng</value>
+  </data>
+</root> 

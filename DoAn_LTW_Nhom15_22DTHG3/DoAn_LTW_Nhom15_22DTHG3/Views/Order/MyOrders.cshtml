@@ -1,0 +1,49 @@
+﻿@model IEnumerable<DoAn_LTW_Nhom15_22DTHG3.Models.Order>
+
+@{
+    ViewData["Title"] = "Đơn đặt phòng của tôi";
+}
+
+<h2 class="text-primary fw-bold mb-4">🏠 Đơn đặt phòng của tôi</h2>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        Bạn chưa có đơn đặt phòng nào.
+    </div>
+}
+else
+{
+    <table class="table table-bordered table-hover shadow-sm bg-white align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Mã đơn</th>
+                <th>Ngày đặt</th>
+                <th>Địa chỉ khách</th>
+                <th>Ghi chú</th>
+                <th>Tiền phòng (VNĐ)</th>
+                <th>Tiền cọc xem phòng (20%)</th>
+                <th>Chi tiết</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                var deposit = order.TotalPrice * 0.2m;
+                <tr>
+                    <td>#@order.Id</td>
+                    <td>@order.OrderDate.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>@order.ShippingAddress</td>
+                    <td>@(string.IsNullOrWhiteSpace(order.Notes) ? "-" : order.Notes)</td>
+                    <td class="fw-bold">@order.TotalPrice.ToString("N0") VNĐ</td>
+                    <td class="text-danger fw-bold">@deposit.ToString("N0") VNĐ</td>
+                    <td>
+                        <a class="btn btn-sm btn-outline-primary" asp-action="Details" asp-route-id="@order.Id">
+                            Xem
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

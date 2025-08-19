@@ -1,0 +1,111 @@
+﻿@model IEnumerable<DoAn_LTW_Nhom15_22DTHG3.Models.Product>
+@{
+    ViewData["Title"] = "Danh sách phòng";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center text-white bg-black p-3 rounded-top">Danh Sách Sản Phẩm</h2>
+    <div class="card bg-light p-4 shadow-lg">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4 class="text-black fw-bold mb-0">Quản Lý Sản Phẩm</h4>
+            <a asp-action="Create" class="btn btn-success btn-lg px-4 py-2 text-white" style="background-color: red; border: 2px solid yellow;">
+                <i class="bi bi-plus-circle"></i> Thêm Sản Phẩm
+            </a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="text-center">@Html.DisplayNameFor(model => model.Name)</th>
+                        <th class="text-center">@Html.DisplayNameFor(model => model.Price)</th>
+                        <th class="text-center">@Html.DisplayNameFor(model => model.Description)</th>
+                        <th class="text-center">Vị Trí</th>
+                        <th class="text-center">Hình Ảnh</th>
+                        <th class="text-center">Danh Mục</th>
+                        <th class="text-center">Thao Tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-black fw-bold">@item.Name</td>
+                            <td class="text-center text-success fw-bold">@item.Price.ToString("N0") ₫</td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(item.Description))
+                                {
+                                    <span class="text-black">@(item.Description.Length > 50 ? item.Description.Substring(0, 50) + "..." : item.Description)</span>
+                                }
+                                else
+                                {
+                                    <span class="text-muted fst-italic">Chưa có mô tả</span>
+                                }
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(item.Region))
+                                {
+                                    <div class="text-black">
+                                        <strong>Khu vực:</strong> @item.Region<br>
+                                        @if (!string.IsNullOrEmpty(item.Address))
+                                        {
+                                            <small class="text-muted">@item.Address</small><br>
+                                        }
+                                        @if (item.Area.HasValue)
+                                        {
+                                            <small class="text-info">@item.Area m²</small>
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    <span class="text-muted fst-italic">Chưa cập nhật</span>
+                                }
+                            </td>
+                            <td class="text-center">
+                                @if (!string.IsNullOrEmpty(item.ImageUrl))
+                                {
+                                    <img src="@item.ImageUrl" alt="@item.Name" class="img-fluid rounded border border-yellow" width="80" height="80" style="object-fit: cover;" />
+                                }
+                                else
+                                {
+                                    <span class="text-muted fst-italic">Chưa có hình</span>
+                                }
+                            </td>
+                            <td class="text-center">
+                                @if (item.Category != null)
+                                {
+                                    <span class="badge bg-primary text-white">@item.Category.Name</span>
+                                }
+                                else
+                                {
+                                    <span class="text-muted fst-italic">Chưa phân loại</span>
+                                }
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-group" role="group">
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm" title="Chỉnh sửa">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    <a asp-action="View" asp-route-id="@item.Id" class="btn btn-info btn-sm" title="Chi tiết">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm" title="Xóa">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Nút quay lại -->
+        <div class="d-flex justify-content-end mt-4">
+            <a href="/Product" class="btn btn-secondary btn-lg px-4 py-2 text-white" style="background-color: black; border: 2px solid yellow;">
+                <i class="bi bi-arrow-left-circle"></i> Quay Lại Danh Sách
+            </a>
+        </div>
+    </div>
+</div>

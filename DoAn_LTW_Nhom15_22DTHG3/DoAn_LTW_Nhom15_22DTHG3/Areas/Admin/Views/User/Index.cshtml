@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewData["Title"] = "Quản lý người dùng";
+}
+
+<h2 class="mb-4">🔐 Quản lý người dùng</h2>
+
+<table class="table table-bordered table-hover shadow-sm bg-white">
+    <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Tên đăng nhập</th>
+            <th>Họ và tên</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Trạng thái</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.User.Id</td>
+                <td>@item.User.UserName</td>
+                <td>@item.User.FullName</td>
+                <td>@item.User.Email</td>
+                <td>@string.Join(", ", item.Roles)</td>
+                <td>
+                    @if (item.User.IsEnabled)
+                    {
+                        <span class="badge bg-success">Hoạt động</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger">Đã khóa</span>
+                    }
+                </td>
+                <td>
+                    <a class="btn btn-sm btn-warning me-1" asp-action="EditUser" asp-route-id="@item.User.Id">
+                        <i class="bi bi-pencil-square"></i> Sửa
+                    </a>
+
+                    <form asp-action="DeleteUser" asp-route-id="@item.User.Id" method="post" class="d-inline" onsubmit="return confirm('Bạn có chắc chắn muốn xóa tài khoản này không?');">
+                        <button type="submit" class="btn btn-sm btn-danger me-1">
+                            <i class="bi bi-trash"></i> Xóa
+                        </button>
+                    </form>
+
+                    <form asp-action="ToggleUserStatus" asp-route-id="@item.User.Id" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-sm @(item.User.IsEnabled ? "btn-outline-danger" : "btn-outline-success")">
+                            <i class="bi @(item.User.IsEnabled ? "bi-person-lock" : "bi-person-check")"></i>
+                            @(item.User.IsEnabled ? "Khóa" : "Mở khóa")
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

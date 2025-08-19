@@ -1,0 +1,10 @@
+﻿@{
+    ViewData["Title"] = "Đặt hàng thành công";
+}
+
+<div class="text-center mt-5">
+    <h2 class="text-success">🎉 Đặt cọc thành công!</h2>
+    <p>Cảm ơn bạn đã đặt cọc. Mã hóa đơn của bạn là: <strong>@ViewBag.OrderId</strong></p>
+
+    <a class="btn btn-primary mt-3" asp-controller="Product" asp-action="Index">Tiếp tục</a>  
+</div>

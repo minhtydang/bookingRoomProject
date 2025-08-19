@@ -1,0 +1,31 @@
+﻿@model DoAn_LTW_Nhom15_22DTHG3.Models.Product
+
+@{
+    ViewData["Title"] = "Xác nhận xóa sản phẩm";
+}
+
+<h2 class="mb-4 fw-bold">Xác nhận xóa</h2>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Thông tin sản phẩm</h5>
+        <p><strong>Tên:</strong> @Model.Name</p>
+        <p><strong>Giá:</strong> @Model.Price.ToString("N0") đ</p>
+        <p><strong>Mô tả:</strong> @Model.Description</p>
+        <p><strong>Loại:</strong> @Model.Category?.Name</p>
+        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+        {
+            <img src="/@Model.ImageUrl" class="card-img-top" alt="Hình sản phẩm" style="height: 200px; object-fit: contain; padding: 10px;" />
+        }
+        else
+        {
+            <p class="text-muted">Không có ảnh</p>
+        }
+    </div>
+</div>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger mt-3">Xác nhận xóa</button>
+    <a asp-action="Index" class="btn btn-secondary mt-3 ms-2">Hủy</a>
+</form>

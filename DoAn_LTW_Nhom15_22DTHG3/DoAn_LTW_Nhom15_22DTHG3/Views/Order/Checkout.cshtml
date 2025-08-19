@@ -1,0 +1,21 @@
+﻿@model DoAn_LTW_Nhom15_22DTHG3.Models.Order
+@{
+    ViewData["Title"] = "Thanh toán";
+}
+
+<h2 class="mb-4">Thông tin đơn hàng</h2>
+
+<form asp-action="Checkout" method="post">
+    <div class="mb-3">
+        <label asp-for="ShippingAddress" class="form-label">Địa chỉ giao hàng</label>
+        <input asp-for="ShippingAddress" class="form-control" />
+        <span asp-validation-for="ShippingAddress" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Notes" class="form-label">Ghi chú</label>
+        <textarea asp-for="Notes" class="form-control"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-success">Xác nhận đặt hàng</button>
+</form>

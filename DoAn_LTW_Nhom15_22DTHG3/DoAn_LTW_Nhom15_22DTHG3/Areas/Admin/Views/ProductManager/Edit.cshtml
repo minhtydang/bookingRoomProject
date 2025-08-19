@@ -1,0 +1,170 @@
+﻿@model DoAn_LTW_Nhom15_22DTHG3.Models.Product
+@{
+    ViewData["Title"] = "Chỉnh sửa sản phẩm";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center text-white bg-black p-3 rounded-top">Chỉnh Sửa Sản Phẩm</h2>
+    <div class="card bg-light p-4 shadow-lg">
+        <form asp-action="Edit" enctype="multipart/form-data" method="post" class="needs-validation" novalidate>
+            <input type="hidden" asp-for="Id" />
+            
+            <div class="row g-3">
+                <!-- Product Name -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label text-black fw-bold">Tên Sản Phẩm:</label>
+                        <input asp-for="Name" class="form-control border-yellow" placeholder="Nhập tên sản phẩm" required />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Price -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label text-black fw-bold">Giá:</label>
+                        <input asp-for="Price" class="form-control border-yellow" placeholder="Nhập giá sản phẩm" min="0" step="0.01" required />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="col-12">
+                    <div class="form-group">
+                        <label class="form-label text-black fw-bold">Mô Tả:</label>
+                        <textarea asp-for="Description" class="form-control border-yellow" rows="4" placeholder="Nhập mô tả sản phẩm"></textarea>
+                    </div>
+                </div>
+
+                <!-- Location Information -->
+                <div class="col-12">
+                    <h4 class="text-black fw-bold border-bottom border-yellow pb-2">Thông Tin Vị Trí</h4>
+                </div>
+
+                <!-- Address -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label text-black fw-bold">Địa Chỉ:</label>
+                        <input type="text" asp-for="Address" class="form-control border-yellow" placeholder="Nhập địa chỉ chi tiết" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Region -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label text-black fw-bold">Khu Vực:</label>
+                        <input type="text" asp-for="Region" class="form-control border-yellow" placeholder="Nhập khu vực (VD: Quận 1, TP.HCM)" />
+                        <span asp-validation-for="Region" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Area -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="form-label text-black fw-bold">Diện Tích (m²):</label>
+                        <input type="number" asp-for="Area" class="form-control border-yellow" placeholder="Nhập diện tích" min="0" step="0.01" />
+                        <span asp-validation-for="Area" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Latitude -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="form-label text-black fw-bold">Vĩ Độ:</label>
+                        <input type="number" asp-for="Latitude" class="form-control border-yellow" placeholder="VD: 10.762622" step="0.000001" />
+                        <span asp-validation-for="Latitude" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Longitude -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="form-label text-black fw-bold">Kinh Độ:</label>
+                        <input type="number" asp-for="Longitude" class="form-control border-yellow" placeholder="VD: 106.660172" step="0.000001" />
+                        <span asp-validation-for="Longitude" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Category -->
+                <div class="col-12">
+                    <div class="form-group">
+                        <label class="form-label text-black fw-bold">Danh Mục:</label>
+                        <select asp-for="CategoryId" class="form-control border-yellow" asp-items="ViewBag.Categories" required>
+                            <option value="">-- Chọn Danh Mục --</option>
+                        </select>
+                        <span asp-validation-for="CategoryId" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Ảnh chính hiện tại -->
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    var imageUrl = Url.Content("~/" + Model.ImageUrl.TrimStart('/'));
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label text-black fw-bold">Ảnh Chính Hiện Tại:</label><br />
+                            <img src="@imageUrl" class="img-fluid rounded border border-yellow" style="max-width: 200px; height:auto;" />
+                        </div>
+                    </div>
+                }
+
+                <!-- Upload ảnh chính mới -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label text-black fw-bold">Ảnh Chính Mới:</label>
+                        <input type="file" asp-for="ImageFile" class="form-control border-yellow" accept="image/*" />
+                    </div>
+                </div>
+
+                <!-- Ảnh phụ hiện tại với checkbox giữ lại -->
+                @if (!string.IsNullOrEmpty(Model.ExtraImageUrls))
+                {
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label text-black fw-bold">Ảnh Phụ Hiện Tại:</label>
+                            <div class="row">
+                                @foreach (var url in Model.ExtraImageUrls.Split(","))
+                                {
+                                    var fileName = System.IO.Path.GetFileName(url);
+                                    var formattedUrl = Url.Content("~/" + url.TrimStart('/'));
+                                    <div class="col-md-3 text-center mb-3">
+                                        <img src="@formattedUrl" class="img-fluid rounded border border-yellow" style="width:100%; height:150px; object-fit:cover;" />
+                                        <div class="form-check mt-1">
+                                            <input type="checkbox" name="KeepExtraImages" value="@fileName" class="form-check-input" checked />
+                                            <label class="form-check-label text-black">Giữ ảnh</label>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <!-- Upload ảnh phụ mới -->
+                <div class="col-12">
+                    <div class="form-group">
+                        <label class="form-label text-black fw-bold">Ảnh Phụ Mới:</label>
+                        <input type="file" name="ExtraImageFiles" class="form-control border-yellow" multiple accept="image/*" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="row mt-4">
+                <div class="col-12 d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary btn-lg px-5 py-3 text-white" style="background-color: #007bff; border: 2px solid yellow;">
+                        <i class="bi bi-check-circle"></i> Lưu Thay Đổi
+                    </button>
+                    <a asp-action="Index" class="btn btn-secondary btn-lg px-5 py-3 text-white" style="background-color: black; border: 2px solid yellow;">
+                        <i class="bi bi-arrow-left-circle"></i> Quay Lại Danh Sách
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

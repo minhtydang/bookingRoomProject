@@ -1,0 +1,46 @@
+﻿@model DoAn_LTW_Nhom15_22DTHG3.Models.Order
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["OrderDetails"];
+}
+
+<h2 class="text-primary mb-4">📄 @Localizer["OrderDetails"] #@Model.Id</h2>
+
+<div class="card mb-4 shadow-sm">
+    <div class="card-body">
+        <p><strong>@Localizer["UserID"]:</strong> @Model.UserId</p>
+        <p><strong>@Localizer["OrderDate"]:</strong> @Model.OrderDate.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</p>
+        <p><strong>@Localizer["ShippingAddress"]:</strong> @Model.ShippingAddress</p>
+        <p><strong>@Localizer["Notes"]:</strong> @(string.IsNullOrWhiteSpace(Model.Notes) ? "-" : Model.Notes)</p>
+        <p><strong>@Localizer["RoomPrice"]:</strong> <span class="text-danger fw-bold">@Model.TotalPrice.ToString("N0") VNĐ</span></p>
+    </div>
+</div>
+
+<h4 class="fw-bold mb-3">🛏️ @Localizer["BookedRoomsList"]</h4>
+
+<table class="table table-bordered table-striped shadow-sm">
+    <thead class="table-dark">
+        <tr>
+            <th>@Localizer["Room"]</th>
+            <th>@Localizer["PricePerMonth"]</th>
+            <th>@Localizer["NumberOfMonths"]</th>
+            <th>@Localizer["Deposit"]</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.OrderDetails)
+        {
+            <tr>
+                <td>@item.Product.Name</td>
+                <td>@item.Price.ToString("N0") VNĐ</td>
+                <td>@item.Quantity</td>
+                <td>@((item.Price * item.Quantity * 0.2m).ToString("N0")) VNĐ</td>
+            </tr>
+
+        }
+    </tbody>
+</table>
+
+<a class="btn btn-secondary mt-3" asp-action="MyOrders">← @Localizer["BackToOrderList"]</a>

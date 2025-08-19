@@ -1,0 +1,68 @@
+﻿@model IEnumerable<DoAn_LTW_Nhom15_22DTHG3.Models.Order>
+
+@{    
+    ViewData["Title"] = "Tổng hợp đặt phòng";
+}
+
+<h2 class="text-primary mb-4">🏠 Tổng hợp các đơn đặt phòng</h2>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">Chưa có đơn đặt phòng nào.</div>
+}
+else
+{
+    foreach (var order in Model)
+    {
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-light">
+                <h5 class="mb-0">Đơn đặt phòng #@order.Id - <span class="text-muted">@order.OrderDate.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</span></h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Khách hàng ID:</strong> @order.UserId</p>  <!-- Bạn có thể đổi thành tên hoặc email nếu có -->
+                <p><strong>Địa chỉ khách đặt:</strong> @order.ShippingAddress</p>
+                <p><strong>Ghi chú:</strong> @order.Notes</p>
+                <p><strong>Tổng tiền:</strong> <span class="text-danger fw-bold">@order.TotalPrice.ToString("N0") VNĐ</span></p>
+
+                <h6 class="fw-bold mt-4">🛏️ Các phòng trọ đã đặt:</h6>
+                <table class="table table-sm table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Phòng trọ</th>
+                            <th>Giá thuê/Tháng</th>
+                            <th>Số tháng thuê</th>
+                            <th>Đã Cọc</th>
+                            <th>Trạng thái</th>
+                            <th>Cập nhật</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in order.OrderDetails)
+                        {
+                            <tr>
+                                <td>@item.Product.Name</td>
+                                <td>@item.Price.ToString("N0") VNĐ</td>
+                                <td>@item.Quantity</td>
+                                <td>@((item.Price * item.Quantity * 0.2m).ToString("N0")) VNĐ</td>
+                                <td>
+                                    <form asp-action="UpdateOrderDetailStatus" asp-controller="Order" asp-area="Admin" method="post" class="d-flex align-items-center gap-2">
+                                        <input type="hidden" name="orderDetailId" value="@item.Id" />
+                                        <select name="status" class="form-select form-select-sm">
+                                            <option value="Chờ xác nhận" selected="@(item.Status == "Chờ xác nhận" ? "selected" : null)">Chờ xác nhận</option>
+                                            <option value="Đã xác nhận" selected="@(item.Status == "Đã xác nhận" ? "selected" : null)">Đã xác nhận</option>
+                                            <option value="Đã hủy" selected="@(item.Status == "Đã hủy" ? "selected" : null)">Đã hủy</option>
+                                        </select>
+
+                                        <button type="submit" class="btn btn-sm btn-primary">Lưu</button>
+                                    </form>
+                                </td>
+                                <td>@item.Status</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+}
+

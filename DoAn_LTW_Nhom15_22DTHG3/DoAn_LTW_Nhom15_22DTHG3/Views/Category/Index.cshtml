@@ -1,0 +1,25 @@
+﻿@model IEnumerable<DoAn_LTW_Nhom15_22DTHG3.Models.Category>
+
+<h2>Danh sách danh mục</h2>
+<a asp-action="Create" class="btn btn-success mb-3">+ Thêm danh mục</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Tên danh mục</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in Model)
+        {
+            <tr>
+                <td>@category.Name</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@category.Id" class="btn btn-warning btn-sm">Sửa</a>
+                    <a asp-action="Delete" asp-route-id="@category.Id" class="btn btn-danger btn-sm">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
