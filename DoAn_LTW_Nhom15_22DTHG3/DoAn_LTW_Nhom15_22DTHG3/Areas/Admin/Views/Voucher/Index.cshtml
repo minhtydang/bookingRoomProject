@@ -1,0 +1,54 @@
+﻿@model IEnumerable<DoAn_LTW_Nhom15_22DTHG3.Models.Voucher>
+
+@{
+    ViewData["Title"] = "Danh sách mã khuyến mãi";
+}
+
+<h2>📄 Danh sách mã khuyến mãi</h2>
+
+<a asp-action="Create" class="btn btn-success mb-3">
+    <i class="bi bi-plus-circle"></i> Thêm mới
+</a>
+
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Mã</th>
+            <th>Mô tả</th>
+            <th>Giảm (%)</th>
+            <th>Giảm tối đa</th>
+            <th>Thời gian</th>
+            <th>Trạng thái</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Code</td>
+                <td>@item.Description</td>
+                <td>@(item.DiscountPercent * 100)%</td>
+                <td>@(item.MaxDiscountAmount?.ToString("N0") ?? "Không giới hạn")</td>
+                <td>@item.StartDate.ToShortDateString() - @item.EndDate.ToShortDateString()</td>
+                <td>
+                    @if (item.IsActive)
+                    {
+                        <span class="badge bg-success">Đang hoạt động</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Tạm dừng</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Sửa</a>
+                    <form asp-action="Delete" asp-route-id="@item.Id" method="post" class="d-inline"
+                          onsubmit="return confirm('Bạn có chắc chắn muốn xóa mã này?');">
+                        <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

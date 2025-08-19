@@ -1,0 +1,126 @@
+﻿@model DoAn_LTW_Nhom15_22DTHG3.Models.Product
+
+@{
+    ViewData["Title"] = "View";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center text-white bg-black p-3 rounded-top">Chi Tiết Sản Phẩm</h2>
+    <div class="card bg-light p-4 shadow-lg">
+        <div class="row">
+            <div class="col-md-8">
+                <dl class="row">
+                    <dt class="col-sm-3 text-black fw-bold">
+                        Tên Sản Phẩm:
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Html.DisplayFor(model => model.Name)
+                    </dd>
+                    
+                    <dt class="col-sm-3 text-black fw-bold">
+                        Giá:
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Html.DisplayFor(model => model.Price) VNĐ
+                    </dd>
+                    
+                    <dt class="col-sm-3 text-black fw-bold">
+                        Mô Tả:
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Html.DisplayFor(model => model.Description)
+                    </dd>
+                    
+                    <dt class="col-sm-3 text-black fw-bold">
+                        Danh Mục:
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Html.DisplayFor(model => model.Category.Name)
+                    </dd>
+                </dl>
+
+                <!-- Location Information -->
+                <div class="mt-4">
+                    <h4 class="text-black fw-bold border-bottom border-yellow pb-2">Thông Tin Vị Trí</h4>
+                    <dl class="row">
+                        <dt class="col-sm-3 text-black fw-bold">
+                            Địa Chỉ:
+                        </dt>
+                        <dd class="col-sm-9">
+                            @(string.IsNullOrEmpty(Model.Address) ? "Chưa cập nhật" : Model.Address)
+                        </dd>
+                        
+                        <dt class="col-sm-3 text-black fw-bold">
+                            Khu Vực:
+                        </dt>
+                        <dd class="col-sm-9">
+                            @(string.IsNullOrEmpty(Model.Region) ? "Chưa cập nhật" : Model.Region)
+                        </dd>
+                        
+                        <dt class="col-sm-3 text-black fw-bold">
+                            Diện Tích:
+                        </dt>
+                        <dd class="col-sm-9">
+                            @(Model.Area.HasValue ? $"{Model.Area} m²" : "Chưa cập nhật")
+                        </dd>
+                        
+                        <dt class="col-sm-3 text-black fw-bold">
+                            Vĩ Độ:
+                        </dt>
+                        <dd class="col-sm-9">
+                            @(Model.Latitude.HasValue ? Model.Latitude.ToString() : "Chưa cập nhật")
+                        </dd>
+                        
+                        <dt class="col-sm-3 text-black fw-bold">
+                            Kinh Độ:
+                        </dt>
+                        <dd class="col-sm-9">
+                            @(Model.Longitude.HasValue ? Model.Longitude.ToString() : "Chưa cập nhật")
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <!-- Main Image -->
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    var imageUrl = Url.Content("~/" + Model.ImageUrl.TrimStart('/'));
+                    <div class="text-center">
+                        <h5 class="text-black fw-bold mb-3">Ảnh Chính</h5>
+                        <img src="@imageUrl" class="img-fluid rounded border border-yellow" style="max-width: 100%; height: auto;" />
+                    </div>
+                }
+                
+                <!-- Extra Images -->
+                @if (!string.IsNullOrEmpty(Model.ExtraImageUrls))
+                {
+                    <div class="mt-4">
+                        <h5 class="text-black fw-bold mb-3">Ảnh Phụ</h5>
+                        <div class="row">
+                            @foreach (var url in Model.ExtraImageUrls.Split(","))
+                            {
+                                var formattedUrl = Url.Content("~/" + url.TrimStart('/'));
+                                <div class="col-6 mb-2">
+                                    <img src="@formattedUrl" class="img-fluid rounded border border-yellow" style="width: 100%; height: 100px; object-fit: cover;" />
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="row mt-4">
+            <div class="col-12 d-flex justify-content-between">
+                <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary btn-lg px-5 py-3 text-white" style="background-color: #007bff; border: 2px solid yellow;">
+                    <i class="bi bi-pencil-square"></i> Chỉnh Sửa
+                </a>
+                <a asp-action="Index" class="btn btn-secondary btn-lg px-5 py-3 text-white" style="background-color: black; border: 2px solid yellow;">
+                    <i class="bi bi-arrow-left-circle"></i> Quay Lại Danh Sách
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

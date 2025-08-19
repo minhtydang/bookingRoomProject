@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="ProductList" xml:space="preserve">
+    <value>Product List</value>
+  </data>
+  <data name="SearchPlaceholder" xml:space="preserve">
+    <value>Search by name, description...</value>
+  </data>
+  <data name="RegionPlaceholder" xml:space="preserve">
+    <value>Region</value>
+  </data>
+  <data name="MinPricePlaceholder" xml:space="preserve">
+    <value>Price from</value>
+  </data>
+  <data name="MaxPricePlaceholder" xml:space="preserve">
+    <value>Price to</value>
+  </data>
+  <data name="MinAreaPlaceholder" xml:space="preserve">
+    <value>Area from</value>
+  </data>
+  <data name="MaxAreaPlaceholder" xml:space="preserve">
+    <value>Area to</value>
+  </data>
+  <data name="SortBy" xml:space="preserve">
+    <value>Sort By</value>
+  </data>
+  <data name="NameAZ" xml:space="preserve">
+    <value>Name A-Z</value>
+  </data>
+  <data name="NameZA" xml:space="preserve">
+    <value>Name Z-A</value>
+  </data>
+  <data name="PriceAsc" xml:space="preserve">
+    <value>Price Ascending</value>
+  </data>
+  <data name="PriceDesc" xml:space="preserve">
+    <value>Price Descending</value>
+  </data>
+  <data name="ProductImage" xml:space="preserve">
+    <value>Product Image</value>
+  </data>
+  <data name="NoImage" xml:space="preserve">
+    <value>No Image</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="NoCategory" xml:space="preserve">
+    <value>No Category</value>
+  </data>
+  <data name="BookRoom" xml:space="preserve">
+    <value>Book Room</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="RoomImage" xml:space="preserve">
+    <value>Room Image</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="LocationInfo" xml:space="preserve">
+    <value>Location Information</value>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>Region</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="Area" xml:space="preserve">
+    <value>Area</value>
+  </data>
+  <data name="ViewDetails" xml:space="preserve">
+    <value>View Details</value>
+  </data>
+</root> 

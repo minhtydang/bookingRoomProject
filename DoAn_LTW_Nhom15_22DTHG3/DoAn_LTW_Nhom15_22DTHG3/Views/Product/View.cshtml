@@ -1,0 +1,195 @@
+﻿@model DoAn_LTW_Nhom15_22DTHG3.Models.Product
+@{
+    ViewData["Title"] = "Chi tiết sản phẩm";
+
+    var extraImages = !string.IsNullOrEmpty(Model.ExtraImageUrls)
+        ? Model.ExtraImageUrls.Split(',', StringSplitOptions.RemoveEmptyEntries)
+        : Array.Empty<string>();
+
+    var allImages = new List<string>();
+    if (!string.IsNullOrEmpty(Model.ImageUrl))
+    {
+        allImages.Add(Model.ImageUrl);
+    }
+    allImages.AddRange(extraImages);
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+<style>
+    .carousel-item img {
+        object-fit: cover;
+        height: 450px;
+    }
+
+    .img-thumbnail {
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+
+        .img-thumbnail:hover {
+            transform: scale(1.05);
+        }
+</style>
+
+<div class="container my-4">
+    <div class="row mb-3">
+        <div class="col-md-9">
+            <h2 class="fw-bold mb-2">@Model.Name</h2>
+            @if (!string.IsNullOrEmpty(Model.Region) || !string.IsNullOrEmpty(Model.Address))
+            {
+                <p>
+                    <i class="bi bi-geo-alt-fill text-primary"></i> 
+                    @if (!string.IsNullOrEmpty(Model.Address))
+                    {
+                        @Model.Address
+                    }
+                    @if (!string.IsNullOrEmpty(Model.Region))
+                    {
+                        if (!string.IsNullOrEmpty(Model.Address))
+                        {
+                            <span> - </span>
+                        }
+                        @Model.Region
+                    }
+                    @if (Model.Area.HasValue)
+                    {
+                        <span> - </span>
+                        <span class="text-info">@Model.Area m²</span>
+                    }
+                    @if (Model.Latitude.HasValue && Model.Longitude.HasValue)
+                    {
+                        <span> - </span>
+                        <a href="https://maps.google.com/?q=@Model.Latitude,@Model.Longitude" target="_blank" class="text-decoration-none">
+                            <i class="bi bi-map"></i> Xem bản đồ
+                        </a>
+                    }
+                </p>
+            }
+            else
+            {
+                <p><i class="bi bi-geo-alt-fill text-muted"></i> <span class="text-muted">Chưa cập nhật thông tin vị trí</span></p>
+            }
+        </div>
+        <div class="col-md-3 text-end">
+            <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-productId="@Model.Id" asp-route-quantity="1" class="btn btn-primary btn-lg">
+                <i class="bi bi-cart-plus"></i> Đặt ngay
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div id="productCarousel" class="carousel slide mb-3" data-bs-ride="carousel" data-bs-interval="5000">
+                <div class="carousel-inner rounded shadow-sm">
+                    @for (int i = 0; i < allImages.Count; i++)
+                    {
+                        <div class="carousel-item @(i == 0 ? "active" : "")">
+                            <img src="@Url.Content("~/" + allImages[i])" class="d-block w-100" alt="Ảnh sản phẩm" />
+                        </div>
+                    }
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+
+            <div class="d-flex gap-2 flex-wrap">
+                @for (int i = 0; i < allImages.Count; i++)
+                {
+                    <img src="@Url.Content("~/" + allImages[i])"
+                         class="img-thumbnail"
+                         style="width:100px; height:75px; object-fit:cover;"
+                         onclick="setCarouselSlide(@i)" />
+                }
+            </div>
+
+            <p class="lead mt-3">@Model.Description</p>
+        </div>
+
+        <div class="col-md-4">
+            <div class="border rounded p-3 shadow-sm mb-3">
+                <h4 class="text-primary fw-bold">Rất tốt <span class="badge bg-primary">8.1</span></h4>
+                <p>193 đánh giá</p>
+                <p><em>"Phòng ốc rất sạch sẽ và được dọn dẹp mỗi ngày, nội thất hiện đại, tiện nghi đầy đủ đúng như mô tả trên web"</em></p>
+                <p class="fw-bold">Vị trí tuyệt vời! <span class="badge bg-success">8.9</span></p>
+            </div>
+            <div class="border rounded p-3 shadow-sm mb-3">
+                <h6 class="fw-bold">Thông tin sản phẩm</h6>
+                <p><strong>Giá:</strong> <span class="text-danger fw-bold">@Model.Price.ToString("N0") đ</span></p>
+                <p><strong>Loại:</strong> @Model.Category?.Name</p>
+                
+                <!-- Location Information -->
+                @if (!string.IsNullOrEmpty(Model.Region) || !string.IsNullOrEmpty(Model.Address) || Model.Area.HasValue)
+                {
+                    <hr>
+                    <h6 class="fw-bold text-primary">Thông Tin Vị Trí</h6>
+                    @if (!string.IsNullOrEmpty(Model.Region))
+                    {
+                        <p class="mb-1"><strong>Khu vực:</strong> <span class="text-info">@Model.Region</span></p>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.Address))
+                    {
+                        <p class="mb-1"><strong>Địa chỉ:</strong> <span class="text-muted">@Model.Address</span></p>
+                    }
+                    @if (Model.Area.HasValue)
+                    {
+                        <p class="mb-1"><strong>Diện tích:</strong> <span class="text-success">@Model.Area m²</span></p>
+                    }
+                    @if (Model.Latitude.HasValue && Model.Longitude.HasValue)
+                    {
+                        <p class="mb-1">
+                            <strong>Tọa độ:</strong> 
+                            <span class="text-muted">@Model.Latitude, @Model.Longitude</span>
+                        </p>
+                    }
+                }
+                
+                <a asp-action="Index" class="btn btn-outline-secondary w-100 mt-2"><i class="bi bi-arrow-left"></i> Quay lại danh sách</a>
+                <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-productId="@Model.Id" asp-route-quantity="1" class="btn btn-primary w-100 mt-2">
+                    <i class="bi bi-cart-plus"></i> Thêm vào giỏ hàng
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.Latitude.HasValue && Model.Longitude.HasValue)
+{
+    <div id="map" style="width:100%;height:400px;" class="my-3"></div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAma7JX3P62LN8c64Sim_EFtP8PxXPCU7w"></script>
+    <script>
+        function initMap() {
+            var lat = @Model.Latitude;
+            var lng = @Model.Longitude;
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: lat, lng: lng },
+                zoom: 15
+            });
+            var marker = new google.maps.Marker({
+                position: { lat: lat, lng: lng },
+                map: map,
+                title: '@Model.Name'
+            });
+        }
+        window.onload = initMap;
+    </script>
+}
+else
+{
+    <div class="alert alert-warning">Chưa có thông tin vị trí để hiển thị bản đồ.</div>
+}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function setCarouselSlide(index) {
+        const carouselEl = document.getElementById('productCarousel');
+        const carousel = bootstrap.Carousel.getOrCreateInstance(carouselEl);
+        carousel.to(index);
+    }
+</script>

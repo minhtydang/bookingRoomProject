@@ -1,0 +1,44 @@
+﻿@model DoAn_LTW_Nhom15_22DTHG3.Models.Order
+@{
+    ViewData["Title"] = "Chi tiết đơn đặt phòng";
+}
+
+<h2 class="text-primary mb-4">📄 Chi tiết đơn đặt phòng #@Model.Id</h2>
+
+<div class="card mb-4 shadow-sm">
+    <div class="card-body">
+        <p><strong>Người dùng ID:</strong> @Model.UserId</p>
+        <p><strong>Ngày đặt:</strong> @Model.OrderDate.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</p>
+        <p><strong>Địa chỉ khách:</strong> @Model.ShippingAddress</p>
+        <p><strong>Ghi chú:</strong> @(string.IsNullOrWhiteSpace(Model.Notes) ? "-" : Model.Notes)</p>
+        <p><strong>Tiền Phòng:</strong> <span class="text-danger fw-bold">@Model.TotalPrice.ToString("N0") VNĐ</span></p>
+    </div>
+</div>
+
+<h4 class="fw-bold mb-3">🛏️ Danh sách phòng trọ đã đặt</h4>
+
+<table class="table table-bordered table-striped shadow-sm">
+    <thead class="table-dark">
+        <tr>
+            <th>Phòng trọ</th>
+            <th>Giá / Tháng</th>
+            <th>Số Tháng</th>
+            <th>Đã Cọc</th>
+            <th>Trạng thái</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.OrderDetails)
+        {
+            <tr>
+                <td>@item.Product.Name</td>
+                <td>@item.Price.ToString("N0") VNĐ</td>
+                <td>@item.Quantity</td>
+                <td>@((item.Price * item.Quantity * 0.2m).ToString("N0")) VNĐ</td>
+                <td>@item.Status</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a class="btn btn-secondary mt-3" asp-action="MyOrders">← Quay lại danh sách đơn đặt phòng</a>

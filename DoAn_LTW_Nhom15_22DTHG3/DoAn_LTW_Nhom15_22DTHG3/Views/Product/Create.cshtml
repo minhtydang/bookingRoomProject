@@ -1,0 +1,125 @@
+﻿@model DoAn_LTW_Nhom15_22DTHG3.Models.Product
+<h2>Thêm sản phẩm</h2>
+
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label>Tên sản phẩm:</label>
+        <input type="text" asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Giá:</label>
+        <input type="number" asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Mô tả:</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </div>
+
+    <!-- Location Information -->
+    <div class="form-group">
+        <h4>Thông Tin Vị Trí</h4>
+    </div>
+
+    <div class="form-group">
+        <label>Địa chỉ:</label>
+        <input type="text" asp-for="Address" class="form-control" placeholder="Nhập địa chỉ chi tiết" />
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Khu vực:</label>
+        <input type="text" asp-for="Region" class="form-control" placeholder="Nhập khu vực (VD: Quận 1, TP.HCM)" />
+        <span asp-validation-for="Region" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Diện tích (m²):</label>
+        <input type="number" asp-for="Area" class="form-control" placeholder="Nhập diện tích" min="0" step="0.01" />
+        <span asp-validation-for="Area" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Vĩ độ:</label>
+        <input type="number" asp-for="Latitude" class="form-control" placeholder="VD: 10.762622" step="0.000001" />
+        <span asp-validation-for="Latitude" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Kinh độ:</label>
+        <input type="number" asp-for="Longitude" class="form-control" placeholder="VD: 106.660172" step="0.000001" />
+        <span asp-validation-for="Longitude" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Ảnh:</label>
+        <input type="file" name="ImageFile" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Ảnh phụ (có thể chọn nhiều):</label>
+        <input type="file" name="ExtraImageFiles" class="form-control" multiple id="extraImagesInput" />
+        <div id="extraImagesPreview" class="d-flex flex-wrap mt-2 gap-2"></div>
+    </div>
+
+    <div class="form-group">
+        <label>Danh mục:</label>
+        <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-control">
+            <option value="">-- Chọn danh mục --</option>
+        </select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success mt-3">Thêm</button>
+    <div class="d-flex justify-content-end mt-3">
+        <a asp-action="Index" asp-controller="Product" class="btn btn-secondary">← Quay lại danh sách sản phẩm</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.getElementById('extraImagesInput').addEventListener('change', function (event) {
+            const previewContainer = document.getElementById('extraImagesPreview');
+            previewContainer.innerHTML = ""; // Xóa ảnh cũ
+
+            const files = Array.from(event.target.files);
+
+            files.forEach((file, index) => {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'position-relative';
+
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = 'rounded border';
+                    img.style = 'width:100px; height:100px; object-fit:cover;';
+
+                    const btn = document.createElement('button');
+                    btn.textContent = '×';
+                    btn.type = 'button';
+                    btn.className = 'btn btn-danger btn-sm position-absolute top-0 end-0';
+                    btn.style = 'padding:0 5px;';
+                    btn.onclick = function () {
+                        files.splice(index, 1);
+                        const dt = new DataTransfer();
+                        files.forEach(f => dt.items.add(f));
+                        event.target.files = dt.files;
+                        event.target.dispatchEvent(new Event('change'));
+                    };
+
+                    wrapper.appendChild(img);
+                    wrapper.appendChild(btn);
+                    previewContainer.appendChild(wrapper);
+                };
+
+                reader.readAsDataURL(file);
+            });
+        });
+    </script>
+}   

@@ -1,0 +1,226 @@
+﻿@model IEnumerable<Product>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["ProductList"];
+    int numOfQuantity = 1;
+}
+
+<style>
+    .card-custom {
+        border: none;
+        border-radius: 1rem;
+        background-color: #fff;
+        color: #000;
+        transition: transform 0.2s;
+    }
+
+        .card-custom:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+    .btn-gold {
+        background-color: #d4af37;
+        color: #fff;
+        border: none;
+    }
+
+        .btn-gold:hover {
+            background-color: #c49b2d;
+            color: #fff;
+        }
+
+    .text-gold {
+        color: #d4af37;
+    }
+</style>
+
+<div class="container mt-4">
+    <h2 class="mb-4 fw-bold text-gold">@Localizer["ProductList"]</h2>
+
+    <form asp-action="Index" method="get" class="row g-3 mb-4">
+        <div class="col-md-3">
+            <input type="text" id="search-box" name="searchTerm" value="@ViewBag.SearchTerm" class="form-control" placeholder="@Localizer["SearchPlaceholder"]">
+        </div>
+        <div class="col-md-2">
+            <input type="text" name="regionFilter" value="@ViewBag.RegionFilter" class="form-control" placeholder="@Localizer["RegionPlaceholder"]">
+        </div>
+        <div class="col-md-2">
+            <input type="number" name="minPrice" value="@ViewBag.MinPrice" class="form-control" placeholder="@Localizer["MinPricePlaceholder"]">
+        </div>
+        <div class="col-md-2">
+            <input type="number" name="maxPrice" value="@ViewBag.MaxPrice" class="form-control" placeholder="@Localizer["MaxPricePlaceholder"]">
+        </div>
+        <div class="col-md-1">
+            <input type="number" name="minArea" value="@ViewBag.MinArea" class="form-control" placeholder="@Localizer["MinAreaPlaceholder"]">
+        </div>
+        <div class="col-md-1">
+            <input type="number" name="maxArea" value="@ViewBag.MaxArea" class="form-control" placeholder="@Localizer["MaxAreaPlaceholder"]">
+        </div>
+        <div class="col-md-1">
+            <button type="submit" class="btn btn-outline-dark w-100"><i class="bi bi-search"></i></button>
+        </div>
+    </form>
+
+    <div class="mb-3">
+        <strong>@Localizer["SortBy"]</strong>
+        <div class="btn-group ms-2" role="group">
+            <a asp-action="Index" asp-route-sortOrder="name_asc" class="btn btn-outline-secondary btn-sm">@Localizer["NameAZ"]</a>
+            <a asp-action="Index" asp-route-sortOrder="name_desc" class="btn btn-outline-secondary btn-sm">@Localizer["NameZA"]</a>
+            <a asp-action="Index" asp-route-sortOrder="price_asc" class="btn btn-outline-secondary btn-sm">@Localizer["PriceAsc"]</a>
+            <a asp-action="Index" asp-route-sortOrder="price_desc" class="btn btn-outline-secondary btn-sm">@Localizer["PriceDesc"]</a>
+        </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+        @foreach (var product in Model)
+        {
+            <div class="col">
+                <div class="card card-custom h-100 shadow-sm">
+                    @if (!string.IsNullOrEmpty(product.ImageUrl))
+                    {
+                        <img src="@product.ImageUrl" class="card-img-top rounded-top-4" alt="@Localizer["ProductImage"]" style="height: 200px; object-fit: cover;">
+                    }
+                    else
+                    {
+                        <div class="bg-light text-muted text-center d-flex align-items-center justify-content-center rounded-top-4" style="height: 200px;">
+                            @Localizer["NoImage"]
+                        </div>
+                    }
+
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title fw-bold text-dark text-truncate">@product.Name</h5>
+                        <p class="text-danger fw-semibold">@product.Price.ToString("N0") đ</p>
+                        <p class="card-text text-muted small text-truncate">@product.Description</p>
+                        <p class="card-text text-muted small mb-2">
+                            @Localizer["Category"]: @(product.Category?.Name ?? Localizer["NoCategory"].Value)
+                        </p>
+                        <div class="mt-auto">
+                            <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-productId="@product.Id" asp-route-quantity="@numOfQuantity" class="btn btn-gold btn-sm w-100 mb-2">
+                                <i class="bi bi-cart-plus-fill"></i> @Localizer["BookRoom"]
+                            </a>
+                            <button class="btn btn-dark btn-sm w-100" data-bs-toggle="modal" data-bs-target="#productModal_@product.Id">
+                                <i class="bi bi-eye-fill"></i> @Localizer["View"]
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="productModal_@product.Id" tabindex="-1" aria-labelledby="productModalLabel_@product.Id" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content rounded-4">
+                        <div class="modal-header">
+                            <h5 class="modal-title fw-bold text-dark" id="productModalLabel_@product.Id">@product.Name</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="@Localizer["Close"]"></button>
+                        </div>
+                        <div class="modal-body row">
+                            <div class="col-md-6">
+                                <img src="@product.ImageUrl" class="img-fluid rounded" alt="@Localizer["RoomImage"]" />
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong class="text-dark">@Localizer["Price"]:</strong> <span class="text-danger fw-bold">@product.Price.ToString("N0") đ</span></p>
+                                <p><strong class="text-dark">@Localizer["Description"]:</strong> @product.Description</p>
+                                <p><strong class="text-dark">@Localizer["Category"]:</strong> @(product.Category?.Name ?? Localizer["NoCategory"].Value)</p>
+
+                                @if (!string.IsNullOrEmpty(product.Region) || !string.IsNullOrEmpty(product.Address) || product.Area.HasValue)
+                                {
+                                    <div class="mt-3">
+                                        <h6 class="text-dark fw-bold border-bottom pb-2">@Localizer["LocationInfo"]</h6>
+                                        @if (!string.IsNullOrEmpty(product.Region))
+                                        {
+                                            <p class="mb-1"><strong class="text-dark">@Localizer["Region"]:</strong> <span class="text-info">@product.Region</span></p>
+                                        }
+                                        @if (!string.IsNullOrEmpty(product.Address))
+                                        {
+                                            <p class="mb-1"><strong class="text-dark">@Localizer["Address"]:</strong> <span class="text-muted">@product.Address</span></p>
+                                        }
+                                        @if (product.Area.HasValue)
+                                        {
+                                            <p class="mb-1"><strong class="text-dark">@Localizer["Area"]:</strong> <span class="text-success">@product.Area m²</span></p>
+                                        }
+                                    </div>
+                                }
+
+                                <a asp-action="View" asp-route-id="@product.Id" class="btn btn-outline-dark mt-3">@Localizer["ViewDetails"]</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Google Maps -->
+<div id="map" style="width:100%;height:400px;" class="my-3"></div>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.min.js"></script>
+
+    <script>
+        $(function () {
+            $("#search-box").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '@Url.Action("AutoCompleteProductAndRegion", "Product")',
+                        data: { term: request.term },
+                        success: function (data) {
+                            response(data);
+                        },
+                        error: function () {
+                            response([]);
+                        }
+                    });
+                },
+                minLength: 1,
+                select: function (event, ui) {
+                    $("#search-box").val(ui.item.value);
+                    $("form").submit(); // Gửi form sau khi chọn
+                }
+            });
+        });
+
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: 10.762622, lng: 106.660172 },
+                zoom: 12
+            });
+
+            var products = [
+        @foreach (var product in Model)
+        {
+            if (product.Latitude.HasValue && product.Longitude.HasValue)
+            {
+                <text>{
+                    lat: @product.Latitude,
+                    lng: @product.Longitude,
+                    name: '@product.Name.Replace("'", "\'")',
+                    desc: '@(product.Description?.Replace("'", "\'") ?? "")'
+                },</text>
+            }
+        }
+            ];
+
+            products.forEach(function(p) {
+                var marker = new google.maps.Marker({
+                    position: { lat: p.lat, lng: p.lng },
+                    map: map,
+                    title: p.name
+                });
+                var infowindow = new google.maps.InfoWindow({
+                    content: '<strong>' + p.name + '</strong><br>' + p.desc
+                });
+                marker.addListener('click', function() {
+                    infowindow.open(map, marker);
+                });
+            });
+        }
+        window.onload = initMap;
+    </script>
+}

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="YourCart" xml:space="preserve">
+    <value>Your Cart</value>
+  </data>
+  <data name="EmptyCart" xml:space="preserve">
+    <value>Your cart is empty.</value>
+  </data>
+  <data name="Room" xml:space="preserve">
+    <value>Room</value>
+  </data>
+  <data name="RentalDays" xml:space="preserve">
+    <value>Rental Days</value>
+  </data>
+  <data name="RentalPrice" xml:space="preserve">
+    <value>Rental Price (VND)</value>
+  </data>
+  <data name="Deposit" xml:space="preserve">
+    <value>Viewing Deposit (20%)</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="CheckInDate" xml:space="preserve">
+    <value>Check-in Date</value>
+  </data>
+  <data name="CheckOutDate" xml:space="preserve">
+    <value>Check-out Date</value>
+  </data>
+  <data name="RemoveFromCart" xml:space="preserve">
+    <value>Remove room from cart</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="UpdateRentalDays" xml:space="preserve">
+    <value>Update Rental Days</value>
+  </data>
+  <data name="TotalRental" xml:space="preserve">
+    <value>Total Rental</value>
+  </data>
+  <data name="EnterVoucherCode" xml:space="preserve">
+    <value>Enter voucher code</value>
+  </data>
+  <data name="Apply" xml:space="preserve">
+    <value>Apply</value>
+  </data>
+  <data name="AppliedCode" xml:space="preserve">
+    <value>Applied Code</value>
+  </data>
+  <data name="DiscountAmount" xml:space="preserve">
+    <value>Discount Amount</value>
+  </data>
+  <data name="Max" xml:space="preserve">
+    <value>Max</value>
+  </data>
+  <data name="TotalToPay" xml:space="preserve">
+    <value>Total to Pay</value>
+  </data>
+  <data name="TotalPayment" xml:space="preserve">
+    <value>Total Payment</value>
+  </data>
+  <data name="HaveVoucherCode" xml:space="preserve">
+    <value>Have a voucher code? Enter it to get a discount!</value>
+  </data>
+  <data name="GoToCheckout" xml:space="preserve">
+    <value>Go to Checkout</value>
+  </data>
+  <data name="PayWithMomo" xml:space="preserve">
+    <value>Pay with MoMo</value>
+  </data>
+  <data name="BackToList" xml:space="preserve">
+    <value>Back to List</value>
+  </data>
+</root> 
